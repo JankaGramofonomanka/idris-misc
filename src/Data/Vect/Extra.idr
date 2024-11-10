@@ -4,8 +4,8 @@ import Data.List
 import Data.Vect
 
 public export
-allConcatsVect : List (Vect n a) -> List (Vect m a) -> List (Vect (n + m) a)
-allConcatsVect l1s l2s = do
+allConcats : List (Vect n a) -> List (Vect m a) -> List (Vect (n + m) a)
+allConcats l1s l2s = do
   l1 <- l1s
   l2 <- l2s
 
@@ -13,20 +13,20 @@ allConcatsVect l1s l2s = do
 
 -- TODO: get rid of `believe_me`
 public export
-sortByVect : (a -> a -> Ordering) -> Vect n a -> Vect n a
-sortByVect cmp v = believe_me $ Data.Vect.fromList $ sortBy cmp (toList v)
+sortBy : (a -> a -> Ordering) -> Vect n a -> Vect n a
+sortBy cmp v = believe_me $ Data.Vect.fromList $ Data.List.sortBy cmp (toList v)
 
 public export
 sortVect : Ord a => Vect n a -> Vect n a
-sortVect = sortByVect compare
+sortVect = sortBy compare
 
 public export
-sortDescByVect : (a -> a -> Ordering) -> Vect n a -> Vect n a
-sortDescByVect = sortByVect . flip
+sortDescBy : (a -> a -> Ordering) -> Vect n a -> Vect n a
+sortDescBy = sortBy . flip
 
 public export
-sortDescVect : Ord a => Vect n a -> Vect n a
-sortDescVect = sortDescByVect compare
+sortDesc : Ord a => Vect n a -> Vect n a
+sortDesc = sortDescBy compare
 
 public export
 vectToList : Vect n a -> List a
@@ -57,4 +57,3 @@ filterLength n l = foldl (appendIfLengthIs n) [] l where
   appendIfLengthIs k acc elem = case toVect k elem of
     Nothing => acc
     Just v  => acc ++ [v]
-
