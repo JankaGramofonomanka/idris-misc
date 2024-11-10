@@ -1,7 +1,6 @@
 ||| A module defining the dependent list and its interface
 module Data.DList
 
-
 ||| A dependent list
 ||| @ f  the constructor of the types of elements
 ||| @ ts the partameters from which the types of the lists elements are
@@ -47,7 +46,7 @@ dtraverse f (ax :: axs) = do
 
   pure (bx :: bxs)
 
--- TODO: rewrite in termos of `Applicative`
+-- TODO: rewrite in terms of `Applicative`
 ||| Map each element of a list to a computation whose result type is dependent
 ||| on the element, evaluate those computations and combine the results.
 export
