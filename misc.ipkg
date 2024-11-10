@@ -16,7 +16,19 @@ authors = "Jan Serwatka"
 -- depends =
 
 -- modules to install
-modules = Misc
+modules = Data.Singleton.Extra
+        , Data.DList
+        , Data.DSum
+        , Data.GCompare
+        , Data.GEq
+        , Data.ShowS
+        , Data.Some
+        , Data.Typed
+        , Prop.Elem.Eq
+        , Prop.Elem
+        , Prop.Forall
+        , Theory
+        , Utils
 
 -- main file (i.e. file to load at REPL)
 -- main =

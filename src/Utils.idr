@@ -50,7 +50,3 @@ export
 foldl3 : Foldable t => (acc -> e1 -> e2 -> e3 -> acc) -> acc -> t (e1, e2, e3) -> acc
 foldl3 f = foldl (uncurry3 . f)
 
-||| Combine words into a sentence, by inserting spaces between words
-export
-mkSentence : List String -> String
-mkSentence = concat . intersperse " "
