@@ -55,3 +55,9 @@ subsequences xs = Nil :: nonEmptySubsequences xs where
 public export
 headIfNonEmpty : (l : List a) -> (NonEmpty l) -> a
 headIfNonEmpty l prf = head l
+
+||| Delete all occurances of an element from a list
+public export
+deleteAll : Eq a => a -> List a -> List a
+deleteAll _ Nil = Nil
+deleteAll x (x' :: xs) = if x == x' then deleteAll x xs else x' :: deleteAll x xs

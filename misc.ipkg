@@ -33,8 +33,8 @@ modules = Data.List.Extra
         , Prop.List
         , Prop.Logic
         , Prop.Nat
+        , Extra
         , Theory
-        , Utils
 
 -- main file (i.e. file to load at REPL)
 -- main =

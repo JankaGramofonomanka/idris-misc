@@ -17,3 +17,9 @@ listToList1 (x :: xs) = x ::: xs
 public export
 list1ToList : List1 a -> List a
 list1ToList (x ::: xs) = x :: xs
+
+export infixr 7 +++
+||| Concatenate a non-empty list with a list
+public export
+(+++) : List1 a -> List a -> List1 a
+(x ::: xs) +++ ys = x ::: xs ++ ys
