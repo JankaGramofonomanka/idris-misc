@@ -1,4 +1,4 @@
-module Logic
+module Prop.Logic
 
 infixr 4 \/
 infixr 5 /\

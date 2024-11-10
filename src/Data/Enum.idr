@@ -1,4 +1,4 @@
-module Interfaces
+module Data.Enum
 
 import Data.Fin
 

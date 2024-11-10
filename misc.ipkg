@@ -16,17 +16,23 @@ authors = "Jan Serwatka"
 -- depends =
 
 -- modules to install
-modules = Data.Singleton.Extra
+modules = Data.List.Extra
+        , Data.List1.Extra
+        , Data.Singleton.Extra
+        , Data.Stream.Extra
+        , Data.Vect.Extra
         , Data.DList
         , Data.DSum
+        , Data.Enum
         , Data.GCompare
         , Data.GEq
         , Data.ShowS
         , Data.Some
         , Data.Typed
-        , Prop.Elem.Eq
-        , Prop.Elem
-        , Prop.Forall
+        , Prop.List.Eq
+        , Prop.List
+        , Prop.Logic
+        , Prop.Nat
         , Theory
         , Utils
 
