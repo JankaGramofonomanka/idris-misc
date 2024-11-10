@@ -1,0 +1,10 @@
+[custom.all.misc]
+type = "local"
+path = "."
+ipkg = "misc.ipkg"
+test = "test/test.ipkg"
+
+[custom.all.misc-test]
+type = "local"
+path = "test"
+ipkg = "test.ipkg"
