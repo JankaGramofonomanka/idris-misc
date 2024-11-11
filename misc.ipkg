@@ -21,13 +21,8 @@ modules = Data.List.Extra
         , Data.Singleton.Extra
         , Data.Stream.Extra
         , Data.Vect.Extra
-        , Data.DList
-        , Data.DSum
         , Data.Enum
-        , Data.GCompare
-        , Data.GEq
         , Data.ShowS
-        , Data.Some
         , Data.Typed
         , Prop.List.Eq
         , Prop.List
