@@ -23,9 +23,10 @@ concat_nil (x :: xs) = rewrite concat_nil xs in Refl
 ||| is the concatenation of mappings of that function on those lists
 total
 export
-map_concat : {f : a -> b}
-          -> (l, l' : List a)
-          -> map f (l ++ l') = map f l ++ map f l'
+map_concat
+   : {f : a -> b}
+  -> (l, l' : List a)
+  -> map f (l ++ l') = map f l ++ map f l'
 map_concat {f} Nil l = Refl
 map_concat {f} (x :: xs) l = rewrite revEq $ map_concat {f} xs l in Refl
 
@@ -33,39 +34,40 @@ map_concat {f} (x :: xs) l = rewrite revEq $ map_concat {f} xs l in Refl
 ||| `map_concat` in the case when the right operand is a singleton
 total
 export
-map_append : {f : a -> b}
-          -> (l : List a)
-          -> (x : a)
-          -> map f (l ++ [x]) = map f l ++ [f x]
+map_append
+   : {f : a -> b}
+  -> (l : List a)
+  -> (x : a)
+  -> map f (l ++ [x]) = map f l ++ [f x]
 map_append l x = map_concat l [x]
 
 ||| The concatenation of a non-empty list with another list is non-empty
 total
 export
-nonempty_plusplus' : (xs, ys : List a) -> NonEmpty xs -> NonEmpty (xs ++ ys)
-nonempty_plusplus' Nil        ys        IsNonEmpty impossible
-nonempty_plusplus' (x :: xs)  Nil       IsNonEmpty = IsNonEmpty
-nonempty_plusplus' (x :: xs)  (y :: ys) IsNonEmpty = IsNonEmpty
+nonempty_concat_left' : (xs, ys : List a) -> NonEmpty xs -> NonEmpty (xs ++ ys)
+nonempty_concat_left' Nil        ys        IsNonEmpty impossible
+nonempty_concat_left' (x :: xs)  Nil       IsNonEmpty = IsNonEmpty
+nonempty_concat_left' (x :: xs)  (y :: ys) IsNonEmpty = IsNonEmpty
 
 ||| The concatenation of a non-empty list with another list is non-empty
 total
 export
-nonempty_plusplus : {xs, ys : List a} -> NonEmpty xs -> NonEmpty (xs ++ ys)
-nonempty_plusplus {xs, ys} = nonempty_plusplus' xs ys
+nonempty_concat_left : {xs, ys : List a} -> NonEmpty xs -> NonEmpty (xs ++ ys)
+nonempty_concat_left {xs, ys} = nonempty_concat_left' xs ys
 
 ||| The concatenation of a list with a non-empty list is non-empty
 total
 export
-plusplus_nonempty' : (xs, ys : List a) -> NonEmpty ys -> NonEmpty (xs ++ ys)
-plusplus_nonempty' xs         Nil       IsNonEmpty impossible
-plusplus_nonempty' Nil        (y :: ys) IsNonEmpty = IsNonEmpty
-plusplus_nonempty' (x :: xs)  (y :: ys) IsNonEmpty = IsNonEmpty
+nonempty_concat_right' : (xs, ys : List a) -> NonEmpty ys -> NonEmpty (xs ++ ys)
+nonempty_concat_right' xs         Nil       IsNonEmpty impossible
+nonempty_concat_right' Nil        (y :: ys) IsNonEmpty = IsNonEmpty
+nonempty_concat_right' (x :: xs)  (y :: ys) IsNonEmpty = IsNonEmpty
 
 ||| The concatenation of a list with a non-empty list is non-empty
 total
 export
-plusplus_nonempty : {xs, ys : List a} -> NonEmpty ys -> NonEmpty (xs ++ ys)
-plusplus_nonempty {xs, ys} = plusplus_nonempty' xs ys
+nonempty_concat_right : {xs, ys : List a} -> NonEmpty ys -> NonEmpty (xs ++ ys)
+nonempty_concat_right {xs, ys} = nonempty_concat_right' xs ys
 
 ||| If   the concatenation of one list  with another is non-empty,
 ||| then the concatenation of the other with the one is non-empty
@@ -100,36 +102,38 @@ nonempty_map {xs} {f} = nonempty_map' xs f
 ||| If the concatenation of two lists is non-empty, then one of the two lists is non-empty
 total
 export
-nonempty_concat' : (xs, ys : List a) -> NonEmpty (xs ++ ys) -> Either (NonEmpty xs) (NonEmpty ys)
-nonempty_concat' Nil        Nil       IsNonEmpty impossible
-nonempty_concat' Nil        (y :: ys) IsNonEmpty = Right IsNonEmpty
-nonempty_concat' (x :: xs)  ys        IsNonEmpty = Left IsNonEmpty
+nonempty_sublist' : (xs, ys : List a) -> NonEmpty (xs ++ ys) -> Either (NonEmpty xs) (NonEmpty ys)
+nonempty_sublist' Nil        Nil       IsNonEmpty impossible
+nonempty_sublist' Nil        (y :: ys) IsNonEmpty = Right IsNonEmpty
+nonempty_sublist' (x :: xs)  ys        IsNonEmpty = Left IsNonEmpty
 
 ||| If the concatenation of two lists is non-empty,
 ||| then one of the two lists is non-empty
 total
 export
-nonempty_concat : {xs, ys : List a} -> NonEmpty (xs ++ ys) -> Either (NonEmpty xs) (NonEmpty ys)
-nonempty_concat {xs, ys} = nonempty_concat' xs ys
+nonempty_sublist : {xs, ys : List a} -> NonEmpty (xs ++ ys) -> Either (NonEmpty xs) (NonEmpty ys)
+nonempty_sublist {xs, ys} = nonempty_sublist' xs ys
 
 ||| If   the concatenation of two               lists is non-empty,
 ||| then the concatenation of mappings on those lists is non-empty
 total
 export
-nonempty_cmap_cmap' : (xs, ys : List a)
-                  -> (f, g : a -> b)
-                  -> NonEmpty (xs ++ ys)
-                  -> NonEmpty (map f xs ++ map g ys)
-nonempty_cmap_cmap' Nil       Nil       f g IsNonEmpty impossible
-nonempty_cmap_cmap' Nil       (y :: ys) f g IsNonEmpty = IsNonEmpty
-nonempty_cmap_cmap' (x :: xs) ys        f g IsNonEmpty = IsNonEmpty
+nonempty_concat_map'
+   : (xs, ys : List a)
+  -> (f, g : a -> b)
+  -> NonEmpty (xs ++ ys)
+  -> NonEmpty (map f xs ++ map g ys)
+nonempty_concat_map' Nil       Nil       f g IsNonEmpty impossible
+nonempty_concat_map' Nil       (y :: ys) f g IsNonEmpty = IsNonEmpty
+nonempty_concat_map' (x :: xs) ys        f g IsNonEmpty = IsNonEmpty
 
 ||| If   the concatenation of two               lists is non-empty,
 ||| then the concatenation of mappings on those lists is non-empty
 total
 export
-nonempty_cmap_cmap : {xs, ys : List a}
-                  -> {f, g : a -> b}
-                  -> NonEmpty (xs ++ ys)
-                  -> NonEmpty (map f xs ++ map g ys)
-nonempty_cmap_cmap {xs, ys, f, g} = nonempty_cmap_cmap' xs ys f g
+nonempty_concat_map
+   : {xs, ys : List a}
+  -> {f, g : a -> b}
+  -> NonEmpty (xs ++ ys)
+  -> NonEmpty (map f xs ++ map g ys)
+nonempty_concat_map {xs, ys, f, g} = nonempty_concat_map' xs ys f g
