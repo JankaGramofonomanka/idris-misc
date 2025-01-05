@@ -28,12 +28,7 @@ modules = Data.List.Extra
         , Prop.List
         , Prop.Logic
         , Prop.Nat
-        , Theory.General
-        , Theory.List
-        , Theory.List1
-        , Theory.Tuple
         , Extra
-        , Theory
 
 -- main file (i.e. file to load at REPL)
 -- main =
